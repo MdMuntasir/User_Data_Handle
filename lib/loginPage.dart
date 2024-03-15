@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:user_handle/DashBoardPage.dart';
 import 'package:user_handle/signUpPage.dart';
 import 'Widgets/UIHelper.dart';
 
@@ -18,15 +19,19 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    String email = emailController.text.toString(), pass = passController.text.toString();
 
     void login() async{
+      String email = emailController.text.toString(), pass = passController.text.toString();
+
+
       if(email=="" || pass=="")
         {UiHelper.alertbox(context, "Enter required fields");} // If any field is empty user will see this message
       else{
         UserCredential ? usercredential; // Declaring UserCredential Variable
         try{
-          usercredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
+          usercredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass).then(
+                  (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashBoard()))
+          );
         }
         on FirebaseAuthException catch(e){
           // It will automatically catch any error and show it to user

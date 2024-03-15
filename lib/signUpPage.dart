@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_handle/DashBoardPage.dart';
 import 'package:user_handle/loginPage.dart';
 import 'package:user_handle/main.dart';
 
@@ -22,11 +23,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    String email= emailController.text.toString(), pass = passController.text.toString();
-
      void signup() async {
-       setState(() {
-       });
+       String email= emailController.text.toString(), pass = passController.text.toString();
 
       if(email=="" || pass =="")
       {
@@ -36,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
         UserCredential ? usercredential; // Declaring UserCredential Variable
         try {
           usercredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: pass).then(
-                  (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()))
+                  (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashBoard()))
           );
         }
         on FirebaseAuthException catch(e){
