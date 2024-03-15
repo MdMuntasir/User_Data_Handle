@@ -23,6 +23,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
      void signup() async {
        String email= emailController.text.toString(), pass = passController.text.toString();
 

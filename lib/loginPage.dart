@@ -19,6 +19,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width,
+        h = MediaQuery.of(context).size.height;
+
 
     void login() async{
       String email = emailController.text.toString(), pass = passController.text.toString();
@@ -48,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           UiHelper.CustomTextField(emailController, "Enter email address", Icons.mail, false),
           UiHelper.CustomTextField(passController, "Enter password", Icons.password, true),
           UiHelper.customButton(login, "Login" , 50, 200),
+          SizedBox(height: h*.015),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -58,7 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: const Text("Sign Up", style: TextStyle(fontSize: 20,color: Colors.blueAccent, fontWeight: FontWeight.w300),) )
             ],
-          )
+          ),
+
+
         ],
       ),
     );
