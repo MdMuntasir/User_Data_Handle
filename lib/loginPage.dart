@@ -48,8 +48,8 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          UiHelper.CustomTextField(emailController, "Enter email address", Icons.mail, false),
-          UiHelper.CustomTextField(passController, "Enter password", Icons.password, true),
+          UiHelper.CustomTextField(emailController, "Enter email address", w*.8, Icons.mail, false),
+          UiHelper.CustomTextField(passController, "Enter password", w*.8 , Icons.password, true),
           UiHelper.customButton(login, "Login" , 50, 200),
           SizedBox(height: h*.015),
           Row(

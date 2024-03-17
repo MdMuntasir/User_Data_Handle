@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
 class UiHelper{
-    static CustomTextField(TextEditingController controller, String text, IconData iconData, bool toHide){
+    static CustomTextField(TextEditingController controller, String text, double width, IconData? iconData, bool toHide){
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: TextField(
-              controller: controller,
-              obscureText: toHide,
-              decoration: InputDecoration(
-                  hintText: text,
-                  suffixIcon: Icon(iconData),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)
-                  )
-              ),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          child: SizedBox(
+              width: width,
+            child: TextField(
+                controller: controller,
+                obscureText: toHide,
+                decoration: InputDecoration(
+                    hintText: text,
+                    suffixIcon: iconData!=null? Icon(iconData): null,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25)
+                    )
+                ),
+            ),
           ),
         );
     }
@@ -47,5 +50,31 @@ class UiHelper{
             duration: Duration(seconds: 2),
         );
         return ScaffoldMessenger.of(context).showSnackBar(message);
+    }
+
+    static DashboardText(BuildContext context,TextEditingController controller, String key,String value, bool isEdit){
+      double w = MediaQuery.of(context).size.width;
+      return Row(
+        children: [
+          Text(key + ": ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20
+            ),),
+          SizedBox(width: w*.001,),
+          isEdit ? TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              // hintText: hint,
+              counterText: value
+            ),
+          ) : Text(
+            value,
+            style: TextStyle(
+              fontSize: 18
+            ),),
+        ],
+      );
     }
 }
