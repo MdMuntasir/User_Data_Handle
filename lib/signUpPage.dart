@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:user_handle/DashBoardPage.dart';
+import 'package:user_handle/Models/User_model.dart';
 import 'package:user_handle/loginPage.dart';
 import 'package:user_handle/main.dart';
 import 'Widgets/UIHelper.dart';
@@ -26,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
+  User get user => FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +50,16 @@ class _SignUpPageState extends State<SignUpPage> {
         try {
           usercredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: pass);
 
-          await FirebaseFirestore.instance.collection("Users").doc(email).set({
-            "Name" : name,
-            "Age" : age,
-            "Height" : height,
-            "Weight" : weight,
-            "BMI" : double.parse(weight)/pow((double.parse(height)/100),2)
-          }).then(
+          UserModel uinfo = UserModel(
+              id: user.uid,
+              name: name,
+              age: age,
+              height: height,
+              weight: weight,
+              BMI: double.parse(weight)/pow((double.parse(height)/100),2),
+              email: email);
+
+          await FirebaseFirestore.instance.collection("Users").doc(user.uid).set(uinfo.toMap()).then(
                   (value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashBoard()))
           );
         }
@@ -93,6 +98,6 @@ class _SignUpPageState extends State<SignUpPage> {
           )
         ],
       ),
-    );;
+    );
   }
 }
